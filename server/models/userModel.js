@@ -59,6 +59,11 @@ title:{
 expertiseLevel:{
     type:String
 },
+relationshipType: {
+    type: String,
+    required: true,
+    enum: ['Short Term Relationship', 'Long Term Relationship'],
+  },
 
 createdAt: {
     type: Date,

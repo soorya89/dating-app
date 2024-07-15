@@ -35,15 +35,19 @@ export const regSection2= async (req,res)=>{
   console.log("2222222222222");
   const userId = req.user.id;
     const { employmentType, companyName,designation,location, title, expertiseLevel} = req.body
-    
+    console.log(req.body,"}}}}}}}}");
     
 try{
     const user = await User.findById(userId);
-    if (!user) {
+    console.log(user,"???????????");
+    if (!user)
+       {
       return res.status(404).json({ message: 'User not found' });
     }
+    user.employmentType = employmentType;
+
 if(user.employmentType === "employee" || user.employmentType === "employer"){
-  user.companyName= companyName;
+ user.companyName = companyName;
   user.designation= designation;
   user.location= location;
   user.employmentType=employmentType;
@@ -59,4 +63,29 @@ if(user.employmentType === "employee" || user.employmentType === "employer"){
     console.error('Error saving user:', err);
       res.status(500).json({ success: false, message: 'Internal server error. Try Again' });
 }
+}
+
+export const regSection3 = async (req,res) =>{
+  const userId = req.user.id;
+  
+    const { relationshipType } = req.body;
+  try {
+    
+    const user = await User.findById(userId);
+    if (!user)
+      {
+     return res.status(404).json({ message: 'User not found' });
+   }
+  
+if(relationshipType)user.relationshipType=relationshipType
+    
+    
+    // Save user data to MongoDB
+    await user.save();
+
+    res.status(201).json({ message: 'Registration section 3 data saved successfully.' });
+  } catch (error) {
+    console.error('Error saving registration section 3 data:', error);
+    res.status(500).json({ message: 'Failed to save registration section 3 data.' });
+  }
 }

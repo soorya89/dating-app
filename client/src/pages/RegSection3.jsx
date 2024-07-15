@@ -1,0 +1,99 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL, token } from '../config';
+import { toast } from 'react-toastify';
+
+const RegSection3 = () => {
+  const [relationshipType, setRelationshipType] = useState('');
+  const [isFormValid, setIsFormValid] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsFormValid(relationshipType !== '');
+  }, [relationshipType]);
+
+  const handleOptionClick = (type) => {
+    setRelationshipType(type);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      relationshipType,
+    };
+console.log(formData,"+++++++++++++");
+
+    try {
+      const response = await fetch(`${BASE_URL}/register/register-section3`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+console.log(token);
+      const { message } = await response.json();
+      if (!response.ok) {
+        throw new Error(message);
+      }
+      toast.success(message);
+
+      // Redirect based on relationship type
+      if (relationshipType === 'Long Term Relationship') {
+        navigate('/'); // Replace '/matrimony' with your matrimony app home route
+      } else if (relationshipType === 'Short Term Relationship') {
+        navigate('/'); // Replace '/dating' with your dating app home route
+      }
+      
+    } catch (error) {
+      toast.error(error.message);
+      console.error('Error submitting form:', error);
+    }
+  };
+
+  return (
+    <section className="px-6 lg:px-8 py-10 bg-gray">
+      <div className="w-full max-w-[570px] mx-auto rounded-lg shadow-md md:p-10">
+        <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-10">
+          Select Your <span className="text-primaryColor">Relationship Type</span>
+        </h3>
+        <div className="flex justify-center mb-5">
+          <button
+            className={`mr-4 px-6 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              relationshipType === 'Short Term Relationship' ? 'bg-primaryColor text-white' : 'bg-white text-gray-800'
+            }`}
+            onClick={() => handleOptionClick('Short Term Relationship')}
+          >
+            Short Term
+          </button>
+          <button
+            className={`px-6 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              relationshipType === 'Long Term Relationship' ? 'bg-primaryColor text-white' : 'bg-white text-gray-800'
+            }`}
+            onClick={() => handleOptionClick('Long Term Relationship')}
+          >
+            Long Term
+          </button>
+        </div>
+
+        <form className="py-4 md:py-0" onSubmit={handleSubmit}>
+          <div className="mt-7">
+            <button
+              type="submit"
+              className={`w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3 ${
+                isFormValid ? '' : 'opacity-50 cursor-not-allowed'
+              }`}
+              disabled={!isFormValid}
+            >
+              Save and Continue
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
+};
+
+export default RegSection3;

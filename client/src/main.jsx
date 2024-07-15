@@ -16,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     position='top-right'
     closeOnClick
     pauseOnHover={false}/>
+
     <App />
     </AuthContextPrivider>
     </BrowserRouter>
