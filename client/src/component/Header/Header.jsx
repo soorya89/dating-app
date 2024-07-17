@@ -34,10 +34,10 @@ const Header = () => {
   const toggleMenu = () => menuRef.current.classList.toggle('show__menu');
 
   return (
-    <header className="header flex items-center px-6 lg:px-8 py-10 bg-gray-100" ref={headerRef}>
+    <header className="header flex items-center px-6 lg:px-8 py-10 bg-primaryColor" ref={headerRef}>
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
-        <div>
+        <div className='text-white'>
           {/* <Link to="/">
             <img src="" className="w-[200px]" alt="Logo" />
           </Link> */}
@@ -60,7 +60,7 @@ const Header = () => {
                 </figure> */}
                 <h1 className="text-textColor text-[16px] font-bold ml-2">{user?.name}</h1>
               </Link>
-              <h1 onClick={handleLogout} className="text-textColor text-[16px] font-bold ml-2 cursor-pointer">
+              <h1 onClick={handleLogout} className="text-white text-[16px] font-bold ml-2 cursor-pointer">
                 Logout
               </h1>
             </div>

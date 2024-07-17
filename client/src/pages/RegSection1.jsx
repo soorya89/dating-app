@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BASE_URL,token } from '../config';
 import uploadImageToCloudinary from '../utils/uploadCloudinary'
 import {toast} from 'react-toastify'
+import { RegistrationContext } from '../context/RegistrationContext';
 
 
 

@@ -78,12 +78,12 @@ export const regSection3 = async (req,res) =>{
    }
   
 if(relationshipType)user.relationshipType=relationshipType
-    
+user.isRegistrationComplete = true;
     
     // Save user data to MongoDB
     await user.save();
 
-    res.status(201).json({ message: 'Registration section 3 data saved successfully.' });
+    res.status(201).json({ message: 'Registration completed.' });
   } catch (error) {
     console.error('Error saving registration section 3 data:', error);
     res.status(500).json({ message: 'Failed to save registration section 3 data.' });

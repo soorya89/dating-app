@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL,token } from '../config';
 import {toast} from 'react-toastify'
+import { RegistrationContext } from '../context/RegistrationContext';
 
 const RegSection2 = () => {
   const [employmentType, setEmploymentType] = useState('');

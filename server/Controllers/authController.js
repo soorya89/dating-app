@@ -50,7 +50,7 @@ export const login = async(req,res)=>{
         }
         const token = generateToken(user)
         const {password, ...rest} =user._doc
-        res.status(200).json({status:true,message:"Successfully login",token,data:{...rest}})
+        res.status(200).json({status:true,message:"Successfully login",token,data:{...rest},isRegistrationComplete: user.isRegistrationComplete })
 
     }catch(err){
         res.status(500).json({status:false,message:"Failed to login"})

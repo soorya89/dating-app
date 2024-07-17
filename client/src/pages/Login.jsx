@@ -36,12 +36,16 @@ const Login = () => {
         payload:{
           user:result.data,
           token:result.token,
-          role:result.role,
+         
         },
       })
       
       toast.success(result.message)
-      navigate('/register-section1')
+      if (result.data.isRegistrationComplete) {
+        navigate('/'); // Redirect to home page if registration is complete
+      } else {
+        navigate('/register-section1'); // Redirect to the first registration section if not complete
+      }
     }catch(err){
       toast.error(err.message)
     }

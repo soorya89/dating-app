@@ -64,7 +64,7 @@ relationshipType: {
     required: true,
     enum: ['Short Term Relationship', 'Long Term Relationship'],
   },
-
+  isRegistrationComplete: { type: Boolean, default: false },
 createdAt: {
     type: Date,
     default: Date.now

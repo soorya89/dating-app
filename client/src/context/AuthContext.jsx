@@ -14,7 +14,7 @@ const authReducer =(state,action)=>{
         case 'LOGIN_START':
             return{
                 user:null,
-                role:null,
+            
                 token:null   
             }
         case 'LOGIN_SUCCESS':
@@ -25,7 +25,7 @@ const authReducer =(state,action)=>{
         case 'LOGOUT':
             return{
                 user:null,
-                role:null,
+                
                 token:null  
             }
         default:
