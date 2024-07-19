@@ -4,7 +4,7 @@ import User from '../models/userModel.js';
 export const regSection1= async(req,res)=>{
   console.log('Controller User:', req.user);
     const userId = req.user.id;
-    const { age, dob, hobbies, interest, smoking, drinking, qualification, profilePic,additionalImages,shortReel} = req.body
+    const {gender, age, dob, hobbies, interest, smoking, drinking, qualification, profilePic,additionalImages,shortReel} = req.body
     
     
 try{
@@ -12,7 +12,7 @@ try{
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
+    user.gender=gender
     user.age = age; 
     user.dob = dob;
     user.hobbies = hobbies;
@@ -32,7 +32,7 @@ try{
 }
 
 export const regSection2= async (req,res)=>{
-  console.log("2222222222222");
+
   const userId = req.user.id;
     const { employmentType, companyName,designation,location, title, expertiseLevel} = req.body
     console.log(req.body,"}}}}}}}}");
@@ -68,16 +68,17 @@ if(user.employmentType === "employee" || user.employmentType === "employer"){
 export const regSection3 = async (req,res) =>{
   const userId = req.user.id;
   
-    const { relationshipType } = req.body;
+    const { relationshipType,showProfileType } = req.body;
   try {
-    
+       
     const user = await User.findById(userId);
     if (!user)
       {
      return res.status(404).json({ message: 'User not found' });
    }
   
-if(relationshipType)user.relationshipType=relationshipType
+user.relationshipType=relationshipType
+user.showProfileType=showProfileType
 user.isRegistrationComplete = true;
     
     // Save user data to MongoDB

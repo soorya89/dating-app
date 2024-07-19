@@ -13,6 +13,7 @@ const RegSection1 = () => {
   const [selectedShortReel, setSelectedShortReel] = useState('');
   const [loading,setLoading]=useState(false)
   const [formData, setFormData] = useState({
+    gender:'',
     age: '',
     dob: '',
     hobbies: '',
@@ -21,7 +22,7 @@ const RegSection1 = () => {
     drinking: '',
     qualification: '',
     profilePic: selectedProfilePic,
-    additionalImages: selectedAdditionalImages,
+    additionalImages: [],
     shortReel: selectedShortReel,
   });
 
@@ -76,7 +77,7 @@ if(!res.ok){
 }
 setLoading(false)
     toast.success(message)
-    navigate('/')
+    navigate('/register-section2')
     }catch(err){
       toast.error(err.message)
       setLoading(false)
@@ -91,6 +92,44 @@ setLoading(false)
           Complete Your <span className="text-[#D82A6E]">Profile</span>
         </h3>
         <form className="space-y-6" onSubmit={submitHandler}>
+        <div>
+            <label className="block text-gray-600 text-sm font-medium mb-2" htmlFor="gender">Gender</label>
+            <div className="flex space-x-4">
+              <label className="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="Men"
+                  checked={formData.gender === 'Men'}
+                  onChange={handleInputChange}
+                  className="form-radio text-blue-500"
+                />
+                <span className="ml-2">Men</span>
+              </label>
+              <label className="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="Women"
+                  checked={formData.gender === 'Women'}
+                  onChange={handleInputChange}
+                  className="form-radio text-blue-500"
+                />
+                <span className="ml-2">Women</span>
+              </label>
+              <label className="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="Both"
+                  checked={formData.gender === 'Both'}
+                  onChange={handleInputChange}
+                  className="form-radio text-blue-500"
+                />
+                <span className="ml-2">Both</span>
+              </label>
+            </div>
+          </div>
           <div>
             <label className="block text-gray-600 text-sm font-medium mb-2" htmlFor="age">Age</label>
             <input

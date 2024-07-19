@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL, token } from '../config';
 import { toast } from 'react-toastify';
+import Modal from 'react-modal';
 
 const RegSection3 = () => {
   const [relationshipType, setRelationshipType] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showProfileType, setshowProfileType] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,6 +17,14 @@ const RegSection3 = () => {
 
   const handleOptionClick = (type) => {
     setRelationshipType(type);
+    if (type === 'Short Term Relationship') {
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleProfileTypeSelect = (type) => {
+    setshowProfileType(type);
+    setIsModalOpen(false);
   };
 
   const handleSubmit = async (e) => {
@@ -21,8 +32,10 @@ const RegSection3 = () => {
 
     const formData = {
       relationshipType,
+      showProfileType: relationshipType === 'Short Term Relationship' ? showProfileType : undefined,
     };
-console.log(formData,"+++++++++++++");
+
+
 
     try {
       const response = await fetch(`${BASE_URL}/register/register-section3`, {
@@ -33,7 +46,7 @@ console.log(formData,"+++++++++++++");
         },
         body: JSON.stringify(formData),
       });
-console.log(token);
+
       const { message } = await response.json();
       if (!response.ok) {
         throw new Error(message);
@@ -42,11 +55,11 @@ console.log(token);
 
       // Redirect based on relationship type
       if (relationshipType === 'Long Term Relationship') {
-        navigate('/'); // Replace '/matrimony' with your matrimony app home route
+        navigate('/'); // Replace '/' with your matrimony app home route
       } else if (relationshipType === 'Short Term Relationship') {
-        navigate('/'); // Replace '/dating' with your dating app home route
+        navigate('/'); // Replace '/' with your dating app home route
       }
-      
+
     } catch (error) {
       toast.error(error.message);
       console.error('Error submitting form:', error);
@@ -91,6 +104,44 @@ console.log(token);
             </button>
           </div>
         </form>
+
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={() => setIsModalOpen(false)}
+          contentLabel="Select Profile Type"
+          className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50"
+          overlayClassName=""
+        >
+          <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+            <h2 className="text-lg font-bold mb-4">Interested in</h2>
+            <div className="flex justify-around mb-4">
+              <button
+                className="bg-primaryColor text-white px-4 py-2 rounded-lg"
+                onClick={() => handleProfileTypeSelect('Men')}
+              >
+                Men
+              </button>
+              <button
+                className="bg-primaryColor text-white px-4 py-2 rounded-lg"
+                onClick={() => handleProfileTypeSelect('Women')}
+              >
+                Women
+              </button>
+              <button
+                className="bg-primaryColor text-white px-4 py-2 rounded-lg"
+                onClick={() => handleProfileTypeSelect('Both')}
+              >
+                Both
+              </button>
+            </div>
+            <button
+              className="mt-4 w-full bg-red-500 text-white px-4 py-2 rounded-lg"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </Modal>
       </div>
     </section>
   );

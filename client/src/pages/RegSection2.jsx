@@ -57,11 +57,11 @@ console.log(formData,"////////////////");
 
       const {message} = await response.json();
       if(!response.ok){
-        throw new Error(message)
+        throw new Error(message) 
       }
       toast.success(message)
-        // Redirect to the next page or show a success message
-        navigate('/');
+      
+        navigate('/register-section3');
     
     } catch (error) {
       toast.error(error.message)

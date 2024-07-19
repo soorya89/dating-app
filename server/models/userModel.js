@@ -12,6 +12,10 @@ const UserSchema = new mongoose.Schema({
   dob: {
     type: Date
 },
+gender: {
+    type: String,
+    required: true
+},
 age: {
     type: Number,
     required: true
@@ -63,6 +67,11 @@ relationshipType: {
     type: String,
     required: true,
     enum: ['Short Term Relationship', 'Long Term Relationship'],
+  },
+  showProfileType: {
+    type: String,
+    required: true,
+   
   },
   isRegistrationComplete: { type: Boolean, default: false },
 createdAt: {

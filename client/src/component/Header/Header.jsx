@@ -2,6 +2,7 @@ import { useEffect, useRef, useContext } from 'react';
 import { BiMenu } from 'react-icons/bi';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { authContext } from '../../context/AuthContext';
+import logo from '../../assets/images/logo1.avif'
 
 const Header = () => {
   const headerRef = useRef(null);
@@ -37,13 +38,13 @@ const Header = () => {
     <header className="header flex items-center px-6 lg:px-8 py-10 bg-primaryColor" ref={headerRef}>
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
-        <div className='text-white'>
-          {/* <Link to="/">
-            <img src="" className="w-[200px]" alt="Logo" />
-          </Link> */}
-          DATING APP
-        </div>
-        {/* Navigation Menu */}
+        {/* <div className='text-white'>
+          <Link to="/">
+            <img src='' className="w-[50px]"  alt="Logo" />
+          </Link> 
+         
+        </div> */}
+      
         <div className="navigation hidden md:flex items-center gap-6" ref={menuRef} onClick={toggleMenu}>
           <ul className="menu flex items-center gap-[2.7rem]">
             <li>
@@ -55,9 +56,9 @@ const Header = () => {
           {token && user ? (
             <div className="flex items-center">
               <Link to="/user/profile/me" className="flex items-center">
-                {/* <figure className="w-[35px] h-[35px] rounded-full cursor-pointer overflow-hidden">
-                  <img className="w-full h-full object-cover" src={user?.photo} alt={user?.name} />
-                </figure> */}
+                 <figure className="w-[35px] h-[35px] rounded-full cursor-pointer overflow-hidden">
+                  <img className="w-full h-full object-cover" src={user?.profilePic} alt={user?.name} />
+                </figure> 
                 <h1 className="text-textColor text-[16px] font-bold ml-2">{user?.name}</h1>
               </Link>
               <h1 onClick={handleLogout} className="text-white text-[16px] font-bold ml-2 cursor-pointer">
