@@ -6,10 +6,8 @@ import mongoose from 'mongoose'
 import authRoute from "./Routes/auth.js"
 import passport from './utils/passport.js'
 import session from 'express-session';
-// import cookieSession from 'cookie-session'
-
-
 import registrationRoute from './Routes/registration.js'
+import userRoute from './Routes/user.js' 
 
 
 
@@ -60,6 +58,7 @@ app.use(passport.session());
 
 app.use('/api/auth',authRoute)
 app.use('/api/register',registrationRoute)
+app.use('/api/user',userRoute)
 
 app.listen(port,()=>{
     

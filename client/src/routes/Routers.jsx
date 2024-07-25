@@ -6,7 +6,10 @@ import Home from '../pages/Home'
 import RegSection1 from '../pages/RegSection1'
 import RegSection2 from '../pages/RegSection2';
 import RegSection3 from '../pages/RegSection3';
+import Profile from '../Dashboard/myAccount/Profile'
+import UpdateProfile from '../component/Profile/UpdateProfile';
 import Tabui from '../pages/Tabui'
+import Overview from '../component/Profile/Overview';
 
 import { Routes, Route } from 'react-router-dom';
 
@@ -22,6 +25,9 @@ const Routers = () => {
         <Route path='/register-section1' element={<RegSection1 />} />
         <Route path='/register-section2' element={<RegSection2 />} />
         <Route path='/register-section3' element={<RegSection3 />} />
+        <Route path='/profile/me' element={<Profile />} />
+        <Route path='/profile/overview' element={<Overview />} />
+        <Route path='/profile/update' element={<UpdateProfile />} />
         <Route path='/tabui' element={<Tabui />} />
       </Routes>
     </>

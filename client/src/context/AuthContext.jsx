@@ -38,7 +38,10 @@ export const AuthContextPrivider =({children})=>{
     localStorage.setItem('user',JSON.stringify(state.user))
     localStorage.setItem('token',state.token)
     }, [state])
-    return <authContext.Provider value={{user:state.user,token:state.token,dispatch}}>
+    const setToken = (newToken) => {
+        dispatch({ type: 'LOGIN_SUCCESS', payload: { user: state.user, token: newToken } });
+      };
+    return <authContext.Provider value={{user:state.user,token:state.token,setToken,dispatch}}>
         {children}
-    </authContext.Provider>
+    </authContext.Provider>    
 }

@@ -10,6 +10,7 @@ export default {
         primaryColor:"#D82A6E",
         headingColor:"#181A1E",
         textColor:"#4E545F",
+        ternaryColor:"#E2E8F0"
         
       },
       boxShadow:{

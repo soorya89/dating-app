@@ -189,9 +189,11 @@ setLoading(false)
               required
             >
               <option value="" disabled>Select an option</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
+              <option value="Regular">Regular</option>
+              <option value="Socially">Socially</option>
+              <option value="Teetotaler">Teetotaler</option>
               <option value="Planning to quit">Planning to quit</option>
+              <option value="Occasionally">Occasionally</option>
             </select>
           </div>
           <div>

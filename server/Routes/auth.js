@@ -1,12 +1,13 @@
 import express from 'express';
 import passport from 'passport';
-import { register, login ,sendOtp,checkOtp} from '../Controllers/authController.js';
+import { register, login ,sendOtp,checkOtp, refreshToken} from '../Controllers/authController.js';
 import {regSection1} from '../Controllers/registrationController.js'
 
 const router = express.Router();
 
 router.post('/register', register);
 router.post('/login', login);
+router.post('/refresh',refreshToken)
 router.post('/send-verification',sendOtp)
 router.post('/check-verification',checkOtp)
 router.post('/register-section1',regSection1)
@@ -17,7 +18,7 @@ router.get("/login/failed", (req, res) => {
   res.status(401).json({
     success: false,
     message: "failure",
-  });
+  });   
 });
 router.get('/google/callback',
   passport.authenticate('google', { 
