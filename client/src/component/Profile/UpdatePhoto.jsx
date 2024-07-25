@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import uploadImageToCloudinary from '../../utils/uploadCloudinary';
+import { BASE_URL,token } from '../../config';
 
 const UpdatePhoto = ({ user, onUpdate }) => {
   const [profilePic, setProfilePic] = useState(null);
@@ -8,50 +10,53 @@ const UpdatePhoto = ({ user, onUpdate }) => {
     additionalImages: user.additionalImages || [null, null, null],
   });
 
-  const handleFileChange = (event, index = null) => {
+  const handleFileChange = async (event, index = null) => {
     const file = event.target.files[0];
 
-    if (index === null) {
-      setProfilePic(file);
-      updatePreview(file, 'profilePic');
-    } else {
-      const newAdditionalImages = [...additionalImages];
-      newAdditionalImages[index] = file;
-      setAdditionalImages(newAdditionalImages);
-      updatePreview(file, 'additionalImages', index);
+    if (file) {
+      const uploadedImage = await uploadImageToCloudinary(file);
+      const imageUrl = uploadedImage.secure_url;
+
+      if (index === null) {
+        setProfilePic(imageUrl);
+        updatePreview(imageUrl, 'profilePic');
+      } else {
+        const newAdditionalImages = [...additionalImages];
+        newAdditionalImages[index] = imageUrl;
+        setAdditionalImages(newAdditionalImages);
+        updatePreview(imageUrl, 'additionalImages', index);
+      }
     }
   };
 
-  const updatePreview = (file, type, index = null) => {
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (type === 'profilePic') {
-          setPreviews((prev) => ({ ...prev, profilePic: reader.result }));
-        } else {
-          const newPreviews = [...previews.additionalImages];
-          newPreviews[index] = reader.result;
-          setPreviews((prev) => ({ ...prev, additionalImages: newPreviews }));
-        }
-      };
-      reader.readAsDataURL(file);
+  const updatePreview = (imageUrl, type, index = null) => {
+    if (imageUrl) {
+      if (type === 'profilePic') {
+        setPreviews((prev) => ({ ...prev, profilePic: imageUrl }));
+      } else {
+        const newPreviews = [...previews.additionalImages];
+        newPreviews[index] = imageUrl;
+        setPreviews((prev) => ({ ...prev, additionalImages: newPreviews }));
+      }
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const formData = new FormData();
-    if (profilePic) formData.append('profilePic', profilePic);
-    additionalImages.forEach((file, index) => {
-      if (file) formData.append(`additionalImage${index + 1}`, file);
-    });
+    const updateData = {
+      profilePic,
+      additionalImages,
+    };
 
     try {
       // Replace with the actual API endpoint and method for updating the profile pictures
       const response = await fetch(`${BASE_URL}/user/${user._id}`, {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(updateData),
       });
 
       if (response.ok) {
@@ -66,11 +71,10 @@ const UpdatePhoto = ({ user, onUpdate }) => {
 
   return (
     <div>
-      <h2 className="font-bold text-xl mb-4">Update Profile Pictures</h2>
+      <h2 className="font-bold text-xl mb-4">Update Photos</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-7">
-          <div className="relative" >
-           
+          <div className="relative">
             <input
               type="file"
               accept="image/*"
@@ -78,12 +82,12 @@ const UpdatePhoto = ({ user, onUpdate }) => {
               className="hidden"
               id="profilePic"
             />
-            <label  htmlFor="profilePic" className="cursor-pointer">
+            <label htmlFor="profilePic" className="cursor-pointer">
               {previews.profilePic ? (
                 <img
                   src={previews.profilePic}
                   alt="Profile"
-                  className="sm:h-[220px] sm:w-[100%] xl:h-[350px]   object-cover rounded-lg object-center"
+                  className="sm:h-[220px] sm:w-[100%] xl:h-[350px] object-cover rounded-lg object-center"
                 />
               ) : (
                 <div className="sm:h-[220px] sm:w-[100%] xl:h-[350px] flex items-center justify-center border-2 border-dashed rounded-lg text-gray-400">
@@ -103,7 +107,6 @@ const UpdatePhoto = ({ user, onUpdate }) => {
           </div>
           {['Additional Image 1', 'Additional Image 2', 'Additional Image 3'].map((label, index) => (
             <div className="relative" key={index}>
-              
               <input
                 type="file"
                 accept="image/*"
@@ -116,7 +119,7 @@ const UpdatePhoto = ({ user, onUpdate }) => {
                   <img
                     src={previews.additionalImages[index]}
                     alt={`Additional ${index + 1}`}
-                    className="sm:h-[220px] sm:w-[100%]  xl:h-[350px] object-cover rounded-lg object-center"
+                    className="sm:h-[220px] sm:w-[100%] xl:h-[350px] object-cover rounded-lg object-center"
                   />
                 ) : (
                   <div className="sm:h-[220px] lg:w-[100%] xl:h-[350px] flex items-center justify-center border-2 border-dashed rounded-lg text-gray-400">
@@ -138,7 +141,7 @@ const UpdatePhoto = ({ user, onUpdate }) => {
         </div>
         <button
           type="submit"
-          className="mt-4  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          className="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         >
           Save
         </button>

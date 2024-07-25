@@ -12,6 +12,7 @@ import Tabui from '../pages/Tabui'
 import Overview from '../component/Profile/Overview';
 
 import { Routes, Route } from 'react-router-dom';
+import UpdatePhoto from '../component/Profile/UpdatePhoto';
 
 const Routers = () => {
   return (
@@ -28,6 +29,7 @@ const Routers = () => {
         <Route path='/profile/me' element={<Profile />} />
         <Route path='/profile/overview' element={<Overview />} />
         <Route path='/profile/update' element={<UpdateProfile />} />
+        <Route path='/profile/photo' element={<UpdatePhoto />} />
         <Route path='/tabui' element={<Tabui />} />
       </Routes>
     </>

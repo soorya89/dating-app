@@ -1,24 +1,27 @@
-import React from 'react';
+import React,{useState,useContext} from 'react';
+import UserList from '../component/User/UserList';
+import { authContext } from '../context/AuthContext';
+import UserCard from '../component/User/UserCard';
+import { BASE_URL } from '../config';
+import useFetchData from '../hooks/useFetchData';
+
 
 const Home = () => {
+ 
+ const {token}=useContext(authContext)
+  const {data} =useFetchData(`${BASE_URL}/user/profileType`)
+  console.log(data,">>>");
   return (
-    <section className=" flex items-center px-6 lg:px-8 py-10 bg-gray">
-      <div className="max-w-sm rounded overflow-hidden shadow-lg">
-
-        home
-        {/* <img className="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains" />
-        <div className="px-6 py-4">
-          <div className="font-bold text-xl mb-2">The Coldest Sunset</div>
-          <p className="text-gray-700 text-base">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-          </p>
-        </div>
-        <div className="px-6 pt-4 pb-2">
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
-        </div> */}
-      </div>
+    <section>
+   
+       <div className='xl:w-[470px] mx-auto'>
+         <h2 className='heading text-center'>Pick the right person</h2>
+         {data && data.map(user => (
+          <UserCard key={user._id} user={user} />
+        ))}
+       </div>
+       
+  
     </section>
   );
 };

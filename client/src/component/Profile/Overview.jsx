@@ -18,7 +18,6 @@ const Overview = () => {
   const { user } = useContext(authContext);
 
   const { data, loading, error, refetch } = useFetchData(`${BASE_URL}/user/profile/me`);
-console.log(data,"...........");
   const formattedDate = data?.dob ? format(new Date(data.dob), 'MMMM dd, yyyy') : '';
 
   const handleOpenModal = () => setIsModalOpen(true);
@@ -53,7 +52,7 @@ console.log(data,"...........");
               </div>
               <button
                 type="button"
-                className="text-white bg-blue-700 my-5 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                className="text-white bg-primaryColor my-5 hover:bg-primayColor focus:ring-4 focus:ring-primaryColor font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-primaryColor dark:hover:bg-primaryColor focus:outline-none dark:focus:ring-primaryColor"
                 onClick={handleOpenModal}
               >
                 Update Profile

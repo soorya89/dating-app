@@ -1,6 +1,6 @@
 // src/components/CustomModal.js
 import React, { useEffect, useRef } from 'react';
-import Modal from 'react-modal'
+
 
 const CustomModal = ({ isOpen, onRequestClose, children }) => {
 
@@ -8,8 +8,8 @@ const CustomModal = ({ isOpen, onRequestClose, children }) => {
 
     return (
        
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center overflow-y-auto">
+            <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full max-h-[90vh] overflow-y-auto">
                 <div className="p-4  flex justify-between items-center">
                     <div></div>
                     <span className="text-gray-800 text-lg font-semibold  ">Edit Profile</span>

@@ -4,14 +4,17 @@ import { BASE_URL } from '../config';
 import { toast } from 'react-toastify';
 
 const useFetchData = (url) => {
+ 
   const { token, setToken } = useContext(authContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
+
     setLoading(true);
     try {
+     
       const res = await fetch(url, {
         headers: { authorization: `Bearer ${token}` },
       });
@@ -76,43 +79,4 @@ const useFetchData = (url) => {
 
 export default useFetchData;
 
-// import { useEffect, useState } from 'react'
-// import {token} from '../config'
-
-// const useFetchData = (url) => {
-//     const [data,setData] = useState([])
-//     const [loading,setLoading] = useState(false)
-//     const [error,setError] = useState(null)
-
-//     useEffect(()=>{
-//         const fetchData = async ()=>{
-
-//             setLoading(true)
-//           try{
-//             console.log(url,";;;;;;;;;;;");
-//             const res= await fetch(url,{
-//                 headers:{ authorization: `Bearer ${token}` },
-//             })
-
-//             const  result =await res.json()
-//             console.log(result,"this is a res");
-//             if(!res.ok){
-//                 throw new Error(result.message + '🤢')
-//             }
-//             setData(result.data)
-//             setLoading(false)
-//           }catch(err){
-//             setError(err.message)
-//             setLoading(false)
-            
-//           }
-//         }
-//         fetchData()
-//     },[url, token])
-//   return {
-//     data,loading,error
-//   }
-// }
-
-// export default useFetchData
 

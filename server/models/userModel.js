@@ -14,11 +14,11 @@ const UserSchema = new mongoose.Schema({
 },
 gender: {
     type: String,
-    required: true
+   
 },
 age: {
     type: Number,
-    required: true
+    
 },
 hobbies: {
     type: String
@@ -67,10 +67,12 @@ relationshipType: {
     type: String,
     required: true,
     enum: ['Short Term Relationship', 'Long Term Relationship'],
+    default: 'Short Term Relationship',
   },
   showProfileType: {
     type: String,
     required: true,
+    default: 'men',
    
   },
   isRegistrationComplete: { type: Boolean, default: false },

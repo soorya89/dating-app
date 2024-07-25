@@ -8,7 +8,7 @@ import { sendVerification, checkVerification } from '../utils/twilio.js'
 
 const generateToken =user=>{
     return jwt.sign({id:user._id},process.env.JWT_SECRET_KEY,
-    {expiresIn:'1day'})
+    {expiresIn:'1d'})
 }
 
 export const refreshToken=async(req,res)=>{
@@ -30,7 +30,7 @@ export const refreshToken=async(req,res)=>{
 
     // Create a new access token
     const newAccessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: '15m', // Or your preferred expiration time
+      expiresIn: '1d', // Or your preferred expiration time
     });
 
     res.status(200).json({ token: newAccessToken });
@@ -44,7 +44,7 @@ export const register = async(req,res)=>{
     try{
         let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).json({ msg: 'User already exists' });
+      return res.status(400).json({ message: 'User already exists' });
     }
 
     user = new User({

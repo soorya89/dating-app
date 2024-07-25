@@ -3,6 +3,7 @@ import { BiMenu } from 'react-icons/bi';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { authContext } from '../../context/AuthContext';
 import logo from '../../assets/images/logo1.avif';
+import dummy from '../../assets/images/dummy.png'
 
 const Header = () => {
   const headerRef = useRef(null);
@@ -26,7 +27,7 @@ console.log(token);
     });
     navigate('/login');
   };
-
+console.log(user,"header");
   useEffect(() => {
     window.addEventListener('scroll', handleStickyHeader);
     return () => window.removeEventListener('scroll', handleStickyHeader);
@@ -60,7 +61,7 @@ console.log(token);
             <div className="flex items-center">
               <Link to="/profile/me" className="flex items-center">
                 <figure className="w-[35px] h-[35px] rounded-full cursor-pointer overflow-hidden">
-                  <img className="w-full h-full object-cover" src={user?.profilePic} alt={user?.name} />
+                  <img className="w-full h-full object-cover" src={user?.profilePic || dummy } alt={user?.name} />
                 </figure>
                 <h1 className="text-textColor text-[16px] font-bold ml-2">{user?.name}</h1>
               </Link>

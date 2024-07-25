@@ -2,7 +2,6 @@ import User from '../models/userModel.js';
 
 
 export const regSection1= async(req,res)=>{
-  console.log('Controller User:', req.user);
     const userId = req.user.id;
     const {gender, age, dob, hobbies, interest, smoking, drinking, qualification, profilePic,additionalImages,shortReel} = req.body
     
@@ -35,11 +34,9 @@ export const regSection2= async (req,res)=>{
 
   const userId = req.user.id;
     const { employmentType, companyName,designation,location, title, expertiseLevel} = req.body
-    console.log(req.body,"}}}}}}}}");
     
 try{
     const user = await User.findById(userId);
-    console.log(user,"???????????");
     if (!user)
        {
       return res.status(404).json({ message: 'User not found' });
@@ -55,8 +52,7 @@ if(user.employmentType === "employee" || user.employmentType === "employer"){
   user.title=title;
   user.expertiseLevel= expertiseLevel;
   user.employmentType=employmentType;
-}
- console.log(user,"::::::::::::::");  
+}  
    await user.save()
    res.status(200).json({ success: true, message: 'RegSection2 successfully saved' });
 }catch(err){
@@ -81,12 +77,11 @@ user.relationshipType=relationshipType
 user.showProfileType=showProfileType
 user.isRegistrationComplete = true;
     
-    // Save user data to MongoDB
     await user.save();
 
     res.status(201).json({ message: 'Registration completed.' });
   } catch (error) {
-    console.error('Error saving registration section 3 data:', error);
+    console.error({message:'Error saving registration section 3 data:', error});
     res.status(500).json({ message: 'Failed to save registration section 3 data.' });
   }
 }
